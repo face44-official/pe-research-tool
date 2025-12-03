@@ -140,22 +140,27 @@ async function callOpenAIResponses(
   client: OpenAI,
   userInput: any
 ): Promise<string> {
-  const response = await client.responses.create({
-    model: process.env.OPEN_AI_MODEL || 'o4-mini-deep-research-2025-06-26',
-    input: userInput,
-    reasoning: { effort: 'medium' },
+  const response = await client.responses.create(
+    {
+      model: process.env.OPEN_AI_MODEL || 'o4-mini-deep-research-2025-06-26',
+      input: userInput,
+      reasoning: { effort: 'medium' },
 
-    max_output_tokens: process.env.OPEN_AI_MAX_OUTPUT_TOKENS
-      ? parseInt(process.env.OPEN_AI_MAX_OUTPUT_TOKENS)
-      : 35000,
-    text: {
-      format: { type: 'text' },
+      max_output_tokens: process.env.OPEN_AI_MAX_OUTPUT_TOKENS
+        ? parseInt(process.env.OPEN_AI_MAX_OUTPUT_TOKENS)
+        : 35000,
+      text: {
+        format: { type: 'text' },
+      },
+      // @ts-ignore
+      max_tool_calls: 5, // Set max_tool_calls as per your requirement
+      tool_choice: 'auto',
+      tools: [{ type: 'web_search_preview', search_context_size: 'medium' }],
     },
-    // @ts-ignore
-    max_tool_calls: 5, // Set max_tool_calls as per your requirement
-    tool_choice: 'auto',
-    tools: [{ type: 'web_search_preview', search_context_size: 'medium' }],
-  })
+    {
+      timeout: 20 * 60 * 1000,
+    }
+  )
 
   if (!response.output || !Array.isArray(response.output)) {
     throw new Error('Invalid response structure from Deep Research API')
