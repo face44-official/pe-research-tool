@@ -153,6 +153,7 @@ export default function Home() {
               disabled={loading}
               size="lg"
               className="w-full mt-6"
+              variant={'outline'}
             >
               Load Sample Reports
             </Button>
