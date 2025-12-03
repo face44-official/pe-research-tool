@@ -1,5 +1,3 @@
-// /app/api/research/route.ts
-
 import { promptData } from '@/baseData'
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
@@ -8,7 +6,7 @@ interface ResearchRequest {
   companyName: string
   companyLocation: string
   companyRevenue: string
-  reportType: 'CEO' | 'investment' // New field to specify report type
+  reportType: 'CEO' | 'investment'
 }
 
 export async function POST(request: NextRequest) {
@@ -106,11 +104,6 @@ export async function POST(request: NextRequest) {
       ]
 
       responseText = await callOpenAIResponses(client, investmentInput)
-    } else {
-      return NextResponse.json(
-        { error: 'Invalid report type' },
-        { status: 400 }
-      )
     }
 
     return NextResponse.json({
@@ -174,7 +167,7 @@ async function callOpenAIResponses(
   //@ts-ignore
   if (!messageOutput || !messageOutput.content) {
     throw new Error(
-      'No message output found in response. Probably the maximum allowed tokens are consumed resulting in incomplete research.'
+      'No message output found in response. Research ended prematurely.'
     )
   }
 

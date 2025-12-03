@@ -48,7 +48,7 @@ export default function Home() {
     })
 
     try {
-      // First, fetch CEO report
+      // fetch CEO Report
       const ceoResponse = await fetch('/api/research', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -71,7 +71,7 @@ export default function Home() {
         CEOReport: ceoData.CEOReport,
       }))
 
-      // Then, fetch Investment report after CEO report is done
+      // Fetch Investment report after CEO report is done
       const investmentResponse = await fetch('/api/research', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -118,9 +118,6 @@ export default function Home() {
           </p>
         </div>
 
-        {/* {JSON.stringify(reports)} */}
-
-        {/* Selection Card */}
         <Card className="mb-8">
           <CardHeader>
             <CardTitle>Select Company</CardTitle>
