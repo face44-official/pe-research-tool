@@ -158,7 +158,7 @@ async function callOpenAIResponses(
       tools: [{ type: 'web_search_preview', search_context_size: 'medium' }],
     },
     {
-      timeout: 20 * 60 * 1000,
+      timeout: 30 * 60 * 1000,
     }
   )
 
